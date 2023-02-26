@@ -1,0 +1,31 @@
+# Ignore Python cache files
+*.pyc
+
+# Ignore virtual environment directory
+venv/
+
+# Node modules
+node_modules/
+
+# Dependency directories
+/.pnp/
+.pnp.js
+
+# Testing
+/coverage
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# System files
+.DS_Store
+Thumbs.db

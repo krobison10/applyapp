@@ -1,0 +1,21 @@
+name: flask-ws
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - bzip2=1.0.8=h620ffc9_4
+  - ca-certificates=2023.01.10=hca03da5_0
+  - libffi=3.4.2=hca03da5_6
+  - ncurses=6.4=h313beb8_0
+  - openssl=1.1.1t=h1a28f6b_0
+  - pip=22.2.2=py311hca03da5_0
+  - python=3.11.0=hc0d8a6c_2
+  - readline=8.2=h1a28f6b_0
+  - setuptools=67.4.0=pyhd8ed1ab_0
+  - sqlite=3.40.1=h7a7dc30_0
+  - tk=8.6.12=hb8d0fd4_0
+  - tzdata=2022g=h04d1e81_0
+  - wheel=0.37.1=pyhd3eb1b0_0
+  - xz=5.2.10=h80987f9_1
+  - zlib=1.2.13=h5a0b063_0
+prefix: /Users/kyler/miniforge3/envs/flask-ws
