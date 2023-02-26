@@ -1,5 +1,4 @@
-import os
-from flask import Flask, render_template, send_from_directory, request, url_for
+from flask import Flask, render_template, request, url_for
 
 # to run, use the command 'flask run' in this directory
 app = Flask(__name__, static_folder='../client', template_folder='../client/pages')
@@ -28,4 +27,3 @@ def react_test():
 @app.route('/hi')
 def hi():
     return 'Hi, World'
-
