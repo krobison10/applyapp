@@ -1,4 +1,9 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: lightslategray;
+  background-color: rgb(219, 219, 219);
+  color: rgb(26, 26, 26);
+}
+
+a {
+  display: block;
 }

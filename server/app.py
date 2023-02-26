@@ -13,8 +13,8 @@ def index():
 # access at <address>/hello?name=<yourname>
 @app.route('/hello')
 def hello():
-    name = request.args.get('name', 'World')
-    return f'Hello, {name}!'
+    name = request.args.get('name', 'Person')
+    return f'Hello, {name}! Accepts GET request arguments.'
 
 
 @app.route('/react-test')
