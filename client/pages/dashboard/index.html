@@ -43,35 +43,18 @@
         
       </tbody>
     </table>
+    <button type="button" class="btn btn-outline-success" id="btn-new">Create New</button>
   </div>
 
   <div id="app-info" class="main-card">
     <legend>Application Info</legend>
     <div id="app-info-inner">
       <div class="view-mode">
-        <!-- Display application info here -->
-        <!-- Sample data -->
         <div id="app-info-view-content">
-          <p>Company: Google</p>
-          <p>Status: Submitted</p>
-          <p>Submit date: 03/07/2023</p>
-          <br>
-          <p>Job title: SWE Intern Summer 2023</p>
-          <p>Posting link: </p>
-          <p>Job description: </p>
-          <p>Posting date: 01/10/2023</p>
-          <p>Field: Software Development</p>
-          <p>Position: Software Engineering Intern</p>
-          <p>Wage: </p>
-          <p>Job start: June 2023</p>
-          <br>
-          <p>Company industry: Technology</p>
-          <p>Company website: </p>
-          <p>Company phone: </p>
-          <br>
+
         </div>
         <button type="button" class="btn btn-primary edit-btn">Edit</button>
-        <button type="button" class="btn btn-outline-danger">Delete</button>
+        <button type="button" class="btn btn-outline-danger delete-btn">Delete</button>
         <button type="button" class="btn btn-outline-primary close-btn">Close</button>
 
       </div>
@@ -83,7 +66,7 @@
               <label for="company-input">Company:</label>
             </div>
             <div class="input-wrapper">
-              <input type="text" class="form-control" id="company-input" name="company">
+              <input type="text" class="form-control" id="company-input" name="company" required>
             </div>
           </div>
         
@@ -92,13 +75,15 @@
               <label for="status-select">Status:</label>
             </div>
             <div class="input-wrapper">
-              <select class="form-select status-dropdown" id="status-select">
+              <select class="form-select status-dropdown form-control" id="status-select" required>
                 <option>Not submitted</option>
                 <option>Submitted</option>
-                <option>Rejected</option>
-                <option>Interviewing</option>
-                <option>Accepted</option>
                 <option>Ignored</option>
+                <option>Responded</option>
+                <option>Interviewing</option>
+                <option>Offered</option>
+                <option>Rejected</option>
+                <option>Accepted</option>
               </select>
             </div>
           </div>
@@ -108,7 +93,7 @@
               <label for="submit-date-input">Submit date:</label>
             </div>
             <div class="input-wrapper">
-              <input type="date" class="form-control" id="submit-date-input" name="submit-date">
+              <input type="date" class="form-control" id="submit-date-input" name="submit-date" min="1970-01-01" max="9999-12-31">
             </div>
           </div>
   
@@ -119,7 +104,7 @@
               <label for="job-title-input">Job title:</label>
             </div>
             <div class="input-wrapper">
-              <input type="text" class="form-control" id="job-title-input" name="job-title">
+              <input type="text" class="form-control" id="job-title-input" name="job-title" required>
             </div>
           </div>
         
@@ -128,7 +113,7 @@
               <label for="posting-link-input">Posting link:</label>
             </div>
             <div class="input-wrapper">
-              <input type="text" class="form-control" id="posting-link-input" name="posting-link">
+              <input type="text" class="form-control" id="posting-link-input" name="posting-link" readonly="">
             </div>
           </div>
         
@@ -146,7 +131,7 @@
               <label for="posting-date-input">Posting date:</label>
             </div>
             <div class="input-wrapper">
-              <input type="date" class="form-control" id="posting-date-input" name="posting-date">
+              <input type="date" class="form-control" id="posting-date-input" name="posting-date" min="1970-01-01" max="9999-12-31">
             </div>
           </div>
         
@@ -182,7 +167,7 @@
               <label for="job-start-input">Job start:</label>
             </div>
             <div class="input-wrapper">
-              <input type="date" class="form-control" id="job-start-input" name="job-start">
+              <input type="date" class="form-control" id="job-start-input" name="job-start" min="1970-01-01" max="9999-12-31">
             </div>
           </div>
   
@@ -217,7 +202,7 @@
   
           <br>
         
-          <button type="button" class="btn btn-primary edit-btn">Save</button>
+          <button type="button" class="btn btn-primary edit-btn" id="save-edit-btn">Save</button>
           <button type="button" class="btn btn-outline-danger cancel-btn">Cancel</button>
         </form>
       </div>
