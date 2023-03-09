@@ -1,0 +1,38 @@
+
+#app-info, #interviews {
+  min-width: 1000px;
+  margin: 100px auto;
+}
+
+#app-info button {
+  margin-right: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.label-wrapper {
+  display: inline-block;
+  width: 150px;
+  text-align: left;
+  margin-right: 10px;
+  vertical-align: top;
+}
+
+.input-wrapper {
+  display: inline-block;
+  width: calc(100% - 170px);
+}
+
+input[type="date"] {
+  width: max-content;
+}
+
+.status-dropdown {
+  width: max-content;
+}
+
+#app-info legend {
+  margin-bottom: 30px;
+}

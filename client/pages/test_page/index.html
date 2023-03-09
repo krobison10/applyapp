@@ -6,13 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test Page</title>
 
-  <link rel="stylesheet" href="{{ url_for('static', filename='pages/test_page/styles.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='pages/globalstyles.css') }}">
   <script src="{{ url_for('static', filename='pages/test_page/script.js') }}" defer></script>
   
 </head>
 <body>
   <h1>App.ly Test Homepage</h1>
-  <img src="{{ url_for('static', filename='pages/test_page/logo.png') }}" alt="logo"/>
+  <img src="{{ url_for('static', filename='pages/logo.png') }}" alt="logo"/>
   <p>
     Developed to test the App.ly server.
   </p>
@@ -20,7 +21,8 @@
   <h2>Links to current endpoints</h2>
   <a href="/hi">Hi page</a>
   <a href="/hello">Hello page</a>
-  <a href="/react-test">Sample react page</a>
+  <a href="/login">Login page</a>
+
   <p><strong>Author:</strong> Kyler Robison</p>
 </body>
 </html>

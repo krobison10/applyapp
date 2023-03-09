@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>App.ly Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='pages/globalstyles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='pages/dashboard/styles.css') }}">
+
+  <script defer>
+    const userId = "{{ user_id }}"; 
+  </script>
+
+  <script src="{{ url_for('static', filename='pages/dashboard/index.js') }}"defer></script>
+</head>
+<body>
+  <header>
+    <div class="header-flex" id="logo-container">
+      <span><img src="{{ url_for('static', filename='pages/logo_small.png') }}" alt="logo"></span>
+    </div>
+    <div class="header-flex"><span></span></div>
+    <div class="header-flex">
+      <span>
+        <a href="{{ url_for('login') }}">
+          <button type="button" class="btn btn-outline-secondary">Log out</button>
+        </a>
+      </span>
+    </div>
+  </header>
+  <div id="app-list" class="applications-container main-card">
+    <legend>Your Applications</legend>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Company</th>
+          <th scope="col">Status</th>
+          <th scope="col">Title</th>
+          <th scope="col">Submit Date</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody id="app-table-body">
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div id="app-info" class="main-card">
+    <legend>Application Info</legend>
+    <div id="app-info-inner">
+      <div class="view-mode">
+        <!-- Display application info here -->
+        <!-- Sample data -->
+        <div id="app-info-view-content">
+          <p>Company: Google</p>
+          <p>Status: Submitted</p>
+          <p>Submit date: 03/07/2023</p>
+          <br>
+          <p>Job title: SWE Intern Summer 2023</p>
+          <p>Posting link: </p>
+          <p>Job description: </p>
+          <p>Posting date: 01/10/2023</p>
+          <p>Field: Software Development</p>
+          <p>Position: Software Engineering Intern</p>
+          <p>Wage: </p>
+          <p>Job start: June 2023</p>
+          <br>
+          <p>Company industry: Technology</p>
+          <p>Company website: </p>
+          <p>Company phone: </p>
+          <br>
+        </div>
+        <button type="button" class="btn btn-primary edit-btn">Edit</button>
+        <button type="button" class="btn btn-outline-danger">Delete</button>
+        <button type="button" class="btn btn-outline-primary close-btn">Close</button>
+
+      </div>
+      <div class="edit-mode" style="display:none;">
+        <!-- Edit application info here -->
+        <form>
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="company-input">Company:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" class="form-control" id="company-input" name="company">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="status-select">Status:</label>
+            </div>
+            <div class="input-wrapper">
+              <select class="form-select status-dropdown" id="status-select">
+                <option>Not submitted</option>
+                <option>Submitted</option>
+                <option>Rejected</option>
+                <option>Interviewing</option>
+                <option>Accepted</option>
+                <option>Ignored</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="submit-date-input">Submit date:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="date" class="form-control" id="submit-date-input" name="submit-date">
+            </div>
+          </div>
+  
+          <br>
+  
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="job-title-input">Job title:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" class="form-control" id="job-title-input" name="job-title">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="posting-link-input">Posting link:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" class="form-control" id="posting-link-input" name="posting-link">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="job-description-input">Job description:</label>
+            </div>
+            <div class="input-wrapper">
+              <textarea class="form-control" id="job-description-input" name="job-description"></textarea>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="posting-date-input">Posting date:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="date" class="form-control" id="posting-date-input" name="posting-date">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="field-input">Field:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" class="form-control" id="field-input" name="field">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="position-input">Position:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" class="form-control" id="position-input" name="position">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="wage-input">Wage:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="number" class="form-control" id="wage-input" name="wage">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="job-start-input">Job start:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="date" class="form-control" id="job-start-input" name="job-start">
+            </div>
+          </div>
+  
+          <br>
+  
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="company-industry-input">Company industry:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" class="form-control" id="company-industry-input" name="position">
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="company-website-input">Company website:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" class="form-control" id="company-website-input" name="position">
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="company-phone-input">Company phone:</label>
+            </div>
+            <div class="input-wrapper">
+              <input type="text" class="form-control" id="company-phone-input" name="position">
+            </div>
+          </div>
+  
+          <br>
+        
+          <button type="button" class="btn btn-primary edit-btn">Save</button>
+          <button type="button" class="btn btn-outline-danger cancel-btn">Cancel</button>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+
+  <div id="interviews" class="main-card">
+    <legend>Your Interviews</legend>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Company</th>
+          <th scope="col">Job title</th>
+          <th scope="col">Date/Time</th>
+          <th scope="col">Modality</th>
+          <th scope="col">Location</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody id="int-table-body">
+        
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

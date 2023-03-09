@@ -1,0 +1,70 @@
+body {
+  background-color: #1e1e1e;
+}
+
+header {
+  display: flex;
+  padding: 1rem;
+}
+
+.header-flex {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.header-flex:first-child > span {margin-right: auto;}
+
+.header-flex:last-child > span {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.logo-container img {
+  max-height: 50px;
+}
+
+button {
+  height: 40px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+}
+
+button:active {
+  box-shadow: none;
+  margin-top: 2px;
+  margin-bottom: -2px;
+
+}
+
+.form-floating {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+div.main-card {
+  padding: 40px;
+  width: 400px;
+  border: 2px solid #3c3c3c;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+}
+
+div.form-container {
+  margin: 200px auto;
+}
+
+div.applications-container {
+  min-width: 1000px;
+  margin: 100px auto 100px auto;
+}
+
+td button {
+  height: 40px;
+}
+
+td, th {
+  vertical-align: middle;
+}
+

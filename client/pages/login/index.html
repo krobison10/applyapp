@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>App.ly: log in</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='pages/globalstyles.css') }}">
+</head>
+<body>
+  <header>
+    <div class="header-flex"><span></span></div>
+    <div class="header-flex" id="logo-container">
+      <span><img src="{{ url_for('static', filename='pages/logo_small.png') }}" alt="logo"></span>
+    </div>
+    <div class="header-flex">
+      <span>
+        <!--href="{{ url_for('signup') }}"-->
+        <a>
+          <button type="button" class="btn btn-outline-secondary">Sign up</button>
+        </a>
+      </span>
+    </div>
+  </header>
+
+
+  <div class="form-container main-card">
+    <form action="{{ url_for('login') }}" method="POST" -->
+      <fieldset>
+        <legend>Log in</legend>
+        <br>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
+          <label for="floatingInput">Email address</label>          
+        </div>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+          <label for="floatingPassword">Password</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Log in</button>
+      </fieldset>
+    </form>
+  </div>  
+  <footer>
+
+  </footer>
+</body>
+</html>
