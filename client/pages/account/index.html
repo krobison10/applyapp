@@ -2,16 +2,16 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>App.ly Dashboard</title>
+	<title>App.ly: Account</title>
   <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='pages/globalstyles.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='pages/dashboard/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='pages/account/styles.css') }}">
 
   <script defer>
     const userId = "{{ user_id }}"; 
   </script>
 
-  <script src="{{ url_for('static', filename='pages/dashboard/index.js') }}"defer></script>
+  <script src="{{ url_for('static', filename='pages/account/index.js') }}"defer></script>
 </head>
 <body>
   <header>
@@ -21,272 +21,133 @@
     <div class="header-flex"><span></span></div>
     <div class="header-flex">
       <span>
-        <a href="{{ url_for('login') }}">
+        <a href="/dashboard">
+          <button type="button" class="btn btn-outline-primary">Dashboard</button>
+        </a>
+        <div style="display: inline-block; min-width: 20px"></div>
+        <a href="/login">
           <button type="button" class="btn btn-outline-primary">Log out</button>
         </a>
       </span>
     </div>
   </header>
-  <div id="app-list" class="applications-container main-card">
-    <legend>Your Applications</legend>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Company</th>
-          <th scope="col">Status</th>
-          <th scope="col">Title</th>
-          <th scope="col">Submit Date</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody id="app-table-body">
-        
-      </tbody>
-    </table>
-    <button type="button" class="btn btn-success" id="btn-new">Create New</button>
-  </div>
+  <div id="account-container" class="main-card">
 
-  <div id="app-info" class="main-card" style="display: none">
-    <legend>Application Info</legend>
-    <div id="app-info-inner">
-      <div class="view-mode">
-        <div id="app-info-view-content">
+    <legend>Account Information</legend>
 
-        </div>
-        <button type="button" class="btn btn-primary edit-btn">Edit</button>
-        <button type="button" class="btn btn-success add-int-btn">Add Interview</button>
-        <button type="button" class="btn btn-outline-danger delete-btn">Delete</button>
-        <button type="button" class="btn btn-outline-primary close-btn">Close</button>
+    <br>
 
-      </div>
-      <div class="edit-mode" style="display:none;">
-        <!-- Edit application info here -->
-        <form>
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="company-input">Company:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" class="form-control" id="company-input" name="company" required>
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="status-select">Status:</label>
-            </div>
-            <div class="input-wrapper">
-              <select class="form-select status-dropdown form-control" id="status-select" required>
-                <option>Not submitted</option>
-                <option>Submitted</option>
-                <option>Ignored</option>
-                <option>Responded</option>
-                <option>Interviewing</option>
-                <option>Offered</option>
-                <option>Rejected</option>
-                <option>Accepted</option>
-              </select>
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="submit-date-input">Submit date:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="date" class="form-control" id="submit-date-input" name="submit-date" min="1970-01-01" max="9999-12-31">
-            </div>
-          </div>
-  
-          <br>
-  
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="job-title-input">Job title:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" class="form-control" id="job-title-input" name="job-title" required>
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="posting-link-input">Posting link:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" class="form-control" id="posting-link-input" name="posting-link" readonly="">
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="job-description-input">Job description:</label>
-            </div>
-            <div class="input-wrapper">
-              <textarea class="form-control" id="job-description-input" name="job-description"></textarea>
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="posting-date-input">Posting date:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="date" class="form-control" id="posting-date-input" name="posting-date" min="1970-01-01" max="9999-12-31">
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="field-input">Field:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" class="form-control" id="field-input" name="field">
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="position-input">Position:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" class="form-control" id="position-input" name="position">
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="wage-input">Wage:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="number" class="form-control" id="wage-input" name="wage">
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="job-start-input">Job start:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="date" class="form-control" id="job-start-input" name="job-start" min="1970-01-01" max="9999-12-31">
-            </div>
-          </div>
-  
-          <br>
-  
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="company-industry-input">Company industry:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" class="form-control" id="company-industry-input" name="position">
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="company-website-input">Company website:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" class="form-control" id="company-website-input" name="position">
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <div class="label-wrapper">
-              <label for="company-phone-input">Company phone:</label>
-            </div>
-            <div class="input-wrapper">
-              <input type="text" class="form-control" id="company-phone-input" name="position">
-            </div>
-          </div>
-  
-          <br>
-        
-          <button type="button" class="btn btn-primary edit-btn" id="save-edit-btn">Save</button>
-          <button type="button" class="btn btn-outline-danger cancel-btn">Cancel</button>
-        </form>
-      </div>
-    </div>
-    
-  </div>
-
-  <div id="interviews" class="main-card">
-    <legend>Your Interviews</legend>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Company</th>
-          <th scope="col">Job title</th>
-          <th scope="col">Date/Time</th>
-          <th scope="col">Modality</th>
-          <th scope="col">Location</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody id="int-table-body">
-        
-      </tbody>
-    </table>
-  </div>
-
-  <div id="int-info" class="main-card add" style="display: none">
-    <legend>Add/Edit Interview</legend>
-    <form>
-      <div class="form-group">
-        <div class="label-wrapper">
-          <p>Company:</p>
-        </div>
-        <div class="input-wrapper">
-          <p id="int-company-value"></p>
-        </div>
-      </div>
+    <div class="view-mode">
 
       <div class="form-group">
         <div class="label-wrapper">
-          <p>Job title:</p>
+          <p>First Name:</p>
         </div>
         <div class="input-wrapper">
-          <p id="int-job-title-value"></p>
+          <p id="first-name-value"></p>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <div class="label-wrapper">
+          <p>Last Name:</p>
+        </div>
+        <div class="input-wrapper">
+          <p id="last-name-value"></p>
         </div>
       </div>
     
       <div class="form-group">
         <div class="label-wrapper">
-          <label for="int-time-input">Date/Time:</label>
+          <p>Email:</p>
         </div>
         <div class="input-wrapper">
-          <input type="datetime-local" class="form-control" id="int-time-input" name="interview_time" min="1970-01-01" max="9999-12-31">
+          <p id="email-value"></p>
         </div>
       </div>
     
       <div class="form-group">
         <div class="label-wrapper">
-          <label for="int-modality-select">Modality:</label>
+          <p>Password:</p>
         </div>
         <div class="input-wrapper">
-          <select class="form-select status-dropdown form-control" id="int-modality-select" name="modality" required>
-            <option>In person</option>
-            <option>Remote</option>
-          </select>
+          <p id="password-value"></p>
         </div>
       </div>
-    
+
       <div class="form-group">
         <div class="label-wrapper">
-          <label for="int-location-input">Location:</label>
+          <p>Phone:</p>
         </div>
         <div class="input-wrapper">
-          <input type="text" class="form-control" id="int-location-input" name="location">
+          <p id="phone-value"></p>
         </div>
       </div>
 
       <br>
+
+      <button type="button" class="btn btn-primary" id="btn-edit-user">Edit</button>
+      <button type="button" class="btn btn-outline-danger" id="btn-delete-user-account">Delete Account</button>
+
+    </div>
+
+    <div class="edit-mode" style="display: none">
+
+      <form action="/api/update_user" method="POST">
+
+        <div class="form-group">
+          <div class="label-wrapper">
+            <label for="int-location-input">First Name:</label>
+          </div>
+          <div class="input-wrapper">
+            <input type="text" class="form-control" id="fname-input" name="f_name" required>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <div class="label-wrapper">
+            <label for="int-location-input">Last Name:</label>
+          </div>
+          <div class="input-wrapper">
+            <input type="text" class="form-control" id="lname-input" name="l_name" required>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <div class="label-wrapper">
+            <label for="int-time-input">Email:</label>
+          </div>
+          <div class="input-wrapper">
+            <input type="email" class="form-control" id="email-input" name="email" required>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <div class="label-wrapper">
+            <label for="int-location-input">Password:</label>
+          </div>
+          <div class="input-wrapper">
+            <input type="password" class="form-control" id="password-input" name="password" required>
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <div class="label-wrapper">
+            <label for="int-location-input">Phone:</label>
+          </div>
+          <div class="input-wrapper">
+            <input type="text" class="form-control" id="phone-input" name="phone" oninput="formatPhoneNumber(this)">
+          </div>
+        </div>
+  
+        <br>
+      
+        <button type="submit" class="btn btn-primary" id="save-user-edit-btn">Save</button>
+        <button type="button" class="btn btn-outline-danger" id="cancel-user-edit-btn">Cancel</button>
+
+      </form>
+    </div>
     
-      <button type="button" class="btn btn-primary" id="save-int-btn">Save</button>
-      <button type="button" class="btn btn-outline-danger" id="cancel-int-btn">Cancel</button>
-    </form>
   </div>
 
 </body>

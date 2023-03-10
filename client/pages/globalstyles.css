@@ -29,6 +29,7 @@ header {
 button {
   height: 40px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+  min-width: max-content;
 }
 
 button:active {

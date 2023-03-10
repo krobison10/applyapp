@@ -1,0 +1,38 @@
+
+#account-container {
+  min-width: 600px;
+  margin: 100px auto;
+}
+
+#account-container button {
+  margin-right: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.label-wrapper {
+  display: inline-block;
+  width: 150px;
+  text-align: left;
+  margin-right: 10px;
+  vertical-align: top;
+}
+
+.input-wrapper {
+  display: inline-block;
+  width: calc(100% - 170px);
+}
+
+input[type="date"], input[type="datetime-local"] {
+  width: max-content;
+}
+
+.status-dropdown {
+  width: max-content;
+}
+
+#account-container legend {
+  margin-bottom: 30px;
+}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, jsonify, url_for
+from flask import Flask, render_template, request, redirect, session, jsonify, url_for, flash
 import mysql.connector
 
 import helpers
@@ -363,6 +363,117 @@ def delete_interview():
     finally:
         cursor.close()
         conn.close()
+   
+   
+@app.route('/api/user', methods=['GET'])
+def user_info():     
+    user_id = session.get('user_id')
+    
+    query = f"SELECT * FROM users WHERE user_id = {user_id}"
+    
+    results = helpers.execute_query(query)
+    
+    user = {
+        'id': results[0][0], 
+        'user_password': results[0][1], 
+        'email': results[0][2], 
+        'f_name': results[0][3], 
+        'l_name': results[0][4],
+        'phone': results[0][5]
+    }
+
+    return jsonify(user)
+
+        
+@app.route('/api/update_user', methods=['POST'])
+def update_user():
+    print(request.form)
+    try:
+        user_id = session.get('user_id')
+        # Get the form data from the request object
+        first_name = request.form.get('f_name')
+        last_name = request.form.get('l_name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        phone = ''.join(filter(str.isdigit, request.form.get('phone')))
+        
+        print(phone)
+        # Perform input validation
+        if not first_name or not last_name or not email or not password:
+            return "Please fill out all required fields", 400
+        
+        
+        # get existing email
+        conn = mysql.connector.connect(
+            host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+            user='zmisv7zova93dpr5',
+            password='soduf1rla58j8elj',
+            database='emm8upo3c4p4gcgr'
+        )
+
+        cursor = conn.cursor()
+
+        query = "SELECT email FROM users WHERE user_id = %s"
+        values = (user_id,)
+        cursor.execute(query, values)
+
+        result = cursor.fetchone()
+        existing_email = result[0]
+
+        cursor.close()
+        conn.close()
+        
+        
+        if email != existing_email:
+            # Check if the email already exists
+            conn = mysql.connector.connect(
+                host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+                user='zmisv7zova93dpr5',
+                password='soduf1rla58j8elj',
+                database='emm8upo3c4p4gcgr'
+            )
+            cursor = conn.cursor()
+            query = "SELECT * FROM users WHERE email=%s"
+            cursor.execute(query, (email,))
+            existing_user = cursor.fetchone()
+            cursor.close()
+            conn.close()
+            
+            if existing_user:
+                flash('An account with that email address already exists.', 'error')
+                return redirect('/account')
+        
+        # Update user account
+        conn = mysql.connector.connect(
+            host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+            user='zmisv7zova93dpr5',
+            password='soduf1rla58j8elj',
+            database='emm8upo3c4p4gcgr'
+        )
+        cursor = conn.cursor()
+        
+        query = "UPDATE users SET f_name = %s, l_name = %s, email = %s, user_password = %s, phone = %s WHERE user_id = %s"
+        values = (first_name, last_name, email, password, phone, user_id)
+        cursor.execute(query, values)
+        conn.commit()
+        
+        
+        # Redirect the user to the login page
+        return redirect('/account')
+    
+    except:
+        flash('An error occurred. Please try again.', 'error')
+        return redirect('/account')
+    
+    finally:
+        cursor.close()
+        conn.close()
+        
+        
+@app.route('/api/delete_user', methods=['POST'])
+def delete_user():
+    
+    return
     
 
 # -------------------- HYBRID --------------------
@@ -458,8 +569,14 @@ def signup():
 
 
 
-
 # -------------------- STATIC --------------------
+
+
+@app.route('/account')
+def account():
+    user_id = session.get('user_id')
+    
+    return render_template('account/index.html', user_id=user_id)
 
 
 @app.route('/dashboard')

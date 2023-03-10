@@ -21,7 +21,11 @@
     <div class="header-flex"><span></span></div>
     <div class="header-flex">
       <span>
-        <a href="{{ url_for('login') }}">
+        <a href="/account">
+          <button type="button" class="btn btn-outline-primary">Account</button>
+        </a>
+        <div style="display: inline-block; min-width: 20px"></div>
+        <a href="/login">
           <button type="button" class="btn btn-outline-primary">Log out</button>
         </a>
       </span>
