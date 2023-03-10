@@ -1,5 +1,7 @@
 'use strict'
 
+showLoader();
+
 let userApplications;
 let activeApplication;
 
@@ -194,6 +196,7 @@ async function fetchApplications() {
         userApplications = data;
         convertNulls(userApplications);
         fillAppTable();
+        userInterviews && hideLoader();
     } catch (error) {
         console.error("Failed to fetch applications");
     }
@@ -432,6 +435,7 @@ async function fetchInterviews() {
 
         convertNulls(userInterviews);
         fillIntTable();
+        userApplications && hideLoader();
     } catch (error) {
         console.error("Failed to fetch interviews");
     }
@@ -534,6 +538,8 @@ function fillIntTable() {
 
 // #endregion
 
+
+
 //Start 
 fetchApplications();
 fetchInterviews();
@@ -560,6 +566,7 @@ function convertNulls(object) {
  * @returns the request response.
  */
 async function submitPOST(url, data) {
+    showLoader();
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -567,8 +574,20 @@ async function submitPOST(url, data) {
       },
       body: JSON.stringify(data)
     });
-    return response.json();
+
+    resetAll();
+
+    userApplications = null;
+    userInterviews = null;
+
+    fetchApplications();
+    fetchInterviews();
 }  
+
+function resetAll() {
+    closeAppWindow();
+    closeIntEdit();
+}
 
 /**
  * Returns the string with the first letter capitalized
@@ -642,4 +661,22 @@ function formatPhoneNumber(phoneNumberString) {
 }
 
 
+// #endregion
+
+
+// #region Loading Wheel
+
+function showLoader() {
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+    const loader = document.createElement("div");
+    loader.classList.add("loader");
+    overlay.appendChild(loader);
+    document.body.appendChild(overlay);
+}
+
+function hideLoader() {
+    const overlay = document.querySelector(".overlay");
+    overlay.parentNode.removeChild(overlay);
+}
 // #endregion
