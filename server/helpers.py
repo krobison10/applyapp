@@ -37,3 +37,21 @@ def execute_query(query):
     conn.close()
 
     return results
+
+
+def execute_insert(sql):
+    conn = mysql.connector.connect(
+        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user='zmisv7zova93dpr5',
+        password='soduf1rla58j8elj',
+        database='emm8upo3c4p4gcgr'
+    )
+    cursor = conn.cursor()
+    cursor.execute(sql)
+
+    pk = cursor.lastrowid
+    
+    cursor.close()
+    conn.close()
+
+    return pk

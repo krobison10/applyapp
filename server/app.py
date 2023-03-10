@@ -55,7 +55,7 @@ def get_interviews():
     user_id = session.get('user_id')
     
     query = f"""
-    SELECT interview_id, company_name, title, interview_date, modality, meeting_location
+    SELECT interview_id, applications.application_id, company_name, title, interview_date, modality, meeting_location
     FROM users 
     JOIN applications ON applications.user_id = users.user_id
     RIGHT JOIN interviews ON interviews.application_id = applications.application_id
@@ -71,16 +71,298 @@ def get_interviews():
     for row in results:
         application = {
             'id': row[0], 
-            'company': row[1], 
-            'title': row[2], 
-            'date': row[3], 
-            'modality': row[4],
-            'location': row[5] 
+            'application_id': row[1],
+            'company': row[2], 
+            'title': row[3], 
+            'date': row[4], 
+            'modality': row[5],
+            'location': row[6] 
         }
         applications.append(application)
 
     # Return the applications as a JSON response
     return jsonify(applications)
+
+
+# Could update to find keys in one query, also could switch
+@app.route('/api/update_application', methods=['POST'])
+def update_application():
+    data = request.get_json()
+
+    conn = mysql.connector.connect(
+        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user='zmisv7zova93dpr5',
+        password='soduf1rla58j8elj',
+        database='emm8upo3c4p4gcgr'
+    )
+    cursor = conn.cursor()
+
+    try:
+        # Replace all empties with NULL string for SQL
+        for key in data:
+            if not data[key]:
+                data[key] = "NULL"
+            else:
+                if key == 'wage':
+                    data[key] = f"{data[key]}"
+                else:
+                    data[key] = f"'{data[key]}'"
+        
+        # Retrieve the posting ID based on the application ID
+        sql = f"""
+        SELECT posting_id FROM applications
+        WHERE application_id = {data["application_id"]};
+        """
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        posting_id = result[0]
+        
+        # Retrieve the company ID based on the posting ID
+        sql = f"""
+        SELECT company_id FROM job_postings
+        WHERE posting_id = {posting_id};
+        """
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        company_id = result[0]
+        
+        # Update the job posting, company, and application records
+        sql = f"""
+        UPDATE job_postings 
+        SET title = {data["title"]}, 
+            job_description = {data["description"]}, 
+            post_date = {data["post_date"]}, 
+            field = {data["field"]}, 
+            position = {data["position"]}, 
+            wage = {data["wage"]}, 
+            job_start = {data["start_date"]}
+        WHERE posting_id = {posting_id};
+        """ 
+        cursor.execute(sql)
+        
+        sql = f"""
+        UPDATE companies SET 
+            company_name = {data["company_name"]}, 
+            industry = {data["industry"]}, 
+            website = {data["website"]}, 
+            phone = {data["phone"]}
+        WHERE company_id = {company_id};
+        """
+        cursor.execute(sql)
+        
+        sql = f"""
+        UPDATE applications 
+        SET application_status = {data["status"]}, 
+            submit_date = {data["submit_date"]}
+        WHERE application_id = {data["application_id"]};
+        """
+        cursor.execute(sql)
+        
+        # Commit changes to the database
+        conn.commit()
+
+        return get_applications()
+
+    except mysql.connector.Error as error:
+        print(f"Error: {error}")
+        return "An error occurred while processing your request", 500
+    
+    finally:
+        cursor.close()
+        conn.close()
+
+
+@app.route('/api/create_application', methods=['POST'])
+def create_application():
+    data = request.get_json()
+
+    conn = mysql.connector.connect(
+        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user='zmisv7zova93dpr5',
+        password='soduf1rla58j8elj',
+        database='emm8upo3c4p4gcgr'
+    )
+    cursor = conn.cursor()
+
+    try:
+        
+        # Replace all empties with NULL string for sql
+        for key in data:
+            if not data[key]:
+                data[key] = "NULL"
+            else:
+                if key == 'wage':
+                    data[key] = f"{data[key]}"
+                else:
+                    data[key] = f"'{data[key]}'"
+        
+        # Insert into companies table
+        sql = f"""
+        INSERT INTO companies (company_name, industry, website, phone)
+        VALUES ({data["company_name"]}, {data["industry"]}, {data["website"]}, {data["phone"]});
+        """
+        cursor.execute(sql)
+        company_id = cursor.lastrowid
+
+        # Insert into job_postings table
+        sql = f"""
+        INSERT INTO job_postings (company_id, title, job_description, post_date, field, position, wage, job_start)
+        VALUES ({company_id}, {data["title"]}, {data["description"]}, {data["post_date"]}, {data["field"]}, {data["position"]}, {data["wage"]}, {data["start_date"]});
+        """
+        cursor.execute(sql)
+        posting_id = cursor.lastrowid
+
+        # Insert into applications table
+        sql = f"""
+        INSERT INTO applications (user_id, posting_id, application_status, submit_date)
+        VALUES ({data["user_id"]}, {posting_id}, {data["status"]}, {data["submit_date"]});
+        """
+        cursor.execute(sql)
+
+        # Commit changes to the database
+        conn.commit()
+
+        return get_applications()
+
+    except mysql.connector.Error as error:
+        print(f"Error: {error}")
+        return "An error occurred while processing your request", 500
+    
+    finally:
+        cursor.close()
+        conn.close()
+        
+        
+@app.route('/api/delete_application', methods=['POST'])
+def delete_application():
+    id = request.get_json()["application_id"]
+    
+    conn = mysql.connector.connect(
+        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user='zmisv7zova93dpr5',
+        password='soduf1rla58j8elj',
+        database='emm8upo3c4p4gcgr'
+    )
+    cursor = conn.cursor()
+    
+    try:
+        sql = f"CALL delete_application({id});"
+        cursor.execute(sql)
+        conn.commit()
+        return get_applications()
+        
+    except mysql.connector.Error as error:
+        print(f"Error: {error}")
+        return "An error occurred while processing your request", 500
+    
+    finally:
+        cursor.close()
+        conn.close()
+        
+        
+@app.route('/api/create_interview', methods=['POST'])
+def create_interview():
+    data = request.get_json()
+    
+    for key in data:
+        if not data[key]:
+            data[key] = "NULL"
+        else:
+            data[key] = f"'{data[key]}'"
+    
+    conn = mysql.connector.connect(
+        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user='zmisv7zova93dpr5',
+        password='soduf1rla58j8elj',
+        database='emm8upo3c4p4gcgr'
+    )
+    cursor = conn.cursor()
+    
+    try:
+        sql = f"""
+        INSERT INTO interviews (application_id, interview_date, modality, meeting_location)
+        VALUES ({data["application_id"]}, {data["interview_date"]}, {data["modality"]}, {data["meeting_location"]});
+        """
+        cursor.execute(sql)
+        conn.commit()
+        return get_interviews()
+        
+    except mysql.connector.Error as error:
+        print(f"Error: {error}")
+        return "An error occurred while processing your request", 500
+    
+    finally:
+        cursor.close()
+        conn.close()
+
+
+@app.route('/api/update_interview', methods=['POST'])
+def update_interview():
+    data = request.get_json()
+    
+    for key in data:
+        if not data[key]:
+            data[key] = "NULL"
+        else:
+            data[key] = f"'{data[key]}'"
+
+    conn = mysql.connector.connect(
+        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user='zmisv7zova93dpr5',
+        password='soduf1rla58j8elj',
+        database='emm8upo3c4p4gcgr'
+    )
+    cursor = conn.cursor()
+
+    try:
+        # Build the SQL update statement using the data from the request
+        sql = f"""
+        UPDATE interviews
+        SET interview_date = {data['interview_date']},
+            modality = {data['modality']},
+            meeting_location = {data['meeting_location']}
+        WHERE interview_id = {data['id']}
+        """
+        cursor.execute(sql)
+        conn.commit()
+        return get_interviews()
+
+    except mysql.connector.Error as error:
+        print(f"Error: {error}")
+        return "An error occurred while processing your request", 500
+
+    finally:
+        cursor.close()
+        conn.close()
+
+    
+
+
+@app.route('/api/delete_interview', methods=['POST'])
+def delete_interview():
+    id = request.get_json()["id"]
+
+    conn = mysql.connector.connect(
+        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user='zmisv7zova93dpr5',
+        password='soduf1rla58j8elj',
+        database='emm8upo3c4p4gcgr'
+    )
+    cursor = conn.cursor()
+
+    try:
+        sql = f"DELETE FROM interviews WHERE interview_id = {id}"
+        cursor.execute(sql)
+        conn.commit()
+        return get_interviews()
+
+    except mysql.connector.Error as error:
+        print(f"Error: {error}")
+        return "An error occurred while processing your request", 500
+
+    finally:
+        cursor.close()
+        conn.close()
     
 
 # -------------------- HYBRID --------------------

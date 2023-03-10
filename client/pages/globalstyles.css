@@ -55,7 +55,7 @@ div.form-container {
   margin: 200px auto;
 }
 
-div.applications-container {
+div.applications-container, div.in {
   min-width: 1000px;
   margin: 100px auto 100px auto;
 }

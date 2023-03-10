@@ -1,10 +1,10 @@
 
-#app-info, #interviews {
+#app-info, #interviews, #int-info {
   min-width: 1000px;
   margin: 100px auto;
 }
 
-#app-info button {
+#app-info button, #int-info button {
   margin-right: 20px;
 }
 
@@ -25,7 +25,7 @@
   width: calc(100% - 170px);
 }
 
-input[type="date"] {
+input[type="date"], input[type="datetime-local"] {
   width: max-content;
 }
 
@@ -33,6 +33,6 @@ input[type="date"] {
   width: max-content;
 }
 
-#app-info legend {
+#app-info legend, #int-info legend {
   margin-bottom: 30px;
 }
