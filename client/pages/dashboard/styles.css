@@ -25,7 +25,15 @@
   width: calc(100% - 170px);
 }
 
-input[type="date"], input[type="datetime-local"] {
+input[type="date"], input[type="datetime-local"], input[type="number"], input[type="tel"] {
+  width: max-content;
+}
+
+.half-width {
+  width: 50%;
+}
+
+input {
   width: max-content;
 }
 

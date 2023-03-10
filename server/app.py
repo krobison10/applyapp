@@ -105,6 +105,8 @@ def update_application():
             else:
                 if key == 'wage':
                     data[key] = f"{data[key]}"
+                elif key == 'phone':
+                    data[key] = ''.join(filter(str.isdigit, data[key]))
                 else:
                     data[key] = f"'{data[key]}'"
         
@@ -193,6 +195,8 @@ def create_application():
             else:
                 if key == 'wage':
                     data[key] = f"{data[key]}"
+                elif key == 'phone':
+                    data[key] = ''.join(filter(str.isdigit, data[key]))
                 else:
                     data[key] = f"'{data[key]}'"
         

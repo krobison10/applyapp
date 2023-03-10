@@ -11,6 +11,9 @@ let activeInterview;
 
 // #region -------------------- APPLICATIONS --------------------
 
+const editCreateAppForm = document.getElementById("edit-create-app");
+const editCreateIntForm = document.getElementById("edit-create-int");
+
 const appInfo = document.getElementById('app-info');
 const viewMode = appInfo.querySelector('.view-mode');
 const editMode = appInfo.querySelector('.edit-mode');
@@ -41,6 +44,7 @@ editBtn.addEventListener('click', () => {
         document.getElementById("company-industry-input").value = activeApplication.industry;
         document.getElementById("company-website-input").value = activeApplication.website;
         document.getElementById("company-phone-input").value = activeApplication.phone;
+        formatPhoneNumberInput(document.getElementById("company-phone-input"));
     }
 });
 
@@ -68,6 +72,9 @@ const saveBtn = document.getElementById("save-edit-btn");
  * Essentially the submit button in edit mode for new interview or updates.
  */
 saveBtn.addEventListener("click", () => {
+    //Return if required fields empty/invalid
+
+    if(!editCreateAppForm.reportValidity()) return;
     //Fill json with form info
     const data = {
         user_id: parseInt(userId),
@@ -228,7 +235,7 @@ function json_to_app_row(application) {
     td1_button.classList.add('btn');
     td1_button.classList.add('btn-outline-primary');
 
-    td1_button.innerHTML = "View";
+    td1_button.innerHTML = "View/Edit";
     /**
      * View button on an application row
      */
@@ -292,7 +299,6 @@ function updateAppInfo(newId) {
     <p>Submit date: ${formatDate(activeApplication.submit_date) || ""}</p>
     <br>
     <p>Job title: ${activeApplication.title || ""}</p>
-    <p>Posting link: </p>
     <p>Job description: ${activeApplication.description || ""}</p>
     <p>Posting date: ${formatDate(activeApplication.post_date || "")}</p>
     <p>Field: ${activeApplication.field || ""}</p>
@@ -344,6 +350,9 @@ const saveIntButton = document.getElementById('save-int-btn');
  * Save changes for an interview in the interview edit window
  */
 saveIntButton.addEventListener('click', () => {
+    //Return if required fields empty
+    if(!editCreateIntForm.reportValidity()) return;
+
     //Creating new
     if(!activeInterview) { 
         if(!activeApplication) throw Error("No active application");
@@ -658,6 +667,17 @@ function formatPhoneNumber(phoneNumberString) {
         return '(' + match[1] + ') ' + match[2] + '-' + match[3];
     }
     return null;
+}
+
+function formatPhoneNumberInput(input) {
+    // Strip all non-numeric characters
+    let phoneNumber = input.value.replace(/\D/g, '');
+  
+    // Format the phone number
+    if (phoneNumber.length === 10) {
+      phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+      input.value = phoneNumber;
+    }
 }
 
 
