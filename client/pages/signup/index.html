@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>App.ly: Create Account</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/darkly/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='pages/globalstyles.css') }}">
+</head>
+<body>
+  <header>
+    <div class="header-flex"><span></span></div>
+    <div class="header-flex" id="logo-container">
+      <span><img src="{{ url_for('static', filename='pages/logo_small.png') }}" alt="logo"></span>
+    </div>
+    <div class="header-flex">
+      <span>
+        <a href="/login">
+          <button type="button" class="btn btn-outline-primary">Log in</button>
+        </a>
+      </span>
+    </div>
+  </header>
+  <div class="form-container main-card">
+    <form action="/signup" method="POST">
+      <fieldset>
+        <legend>Create account</legend>
+        <div class="form-group">
+          <label for="fname" class="form-label mt-4">First name</label>
+          <input type="text" class="form-control" id="fname" placeholder="First name" name="first_name" required>
+        </div>
+        <div class="form-group">
+          <label for="lname" class="form-label mt-4">Last name</label>
+          <input type="text" class="form-control" id="lname" placeholder="Last name" name="last_name" required>
+        </div>
+        <div class="form-group">
+          <label for="email-in" class="form-label mt-4">Email address</label>
+          <input type="email" class="form-control" id="email-in" aria-describedby="emailHelp" placeholder="Email" name="email" required>
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="pword" class="form-label mt-4">Password</label>
+          <input type="password" class="form-control" id="pword" placeholder="Password" name="password" required>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </fieldset>
+    </form>
+  </div>
+</body>
+</html>

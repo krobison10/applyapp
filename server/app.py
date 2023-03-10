@@ -401,10 +401,62 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        return
-    
-    # If GET, return the login page
-    return render_template('login/index.html')
+        try:
+            # Get the form data from the request object
+            first_name = request.form.get('first_name')
+            last_name = request.form.get('last_name')
+            email = request.form.get('email')
+            password = request.form.get('password')
+            
+            # Perform input validation
+            if not first_name or not last_name or not email or not password:
+                return "Please fill out all required fields", 400
+            
+            # Check if the user already exists
+            conn = mysql.connector.connect(
+                host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+                user='zmisv7zova93dpr5',
+                password='soduf1rla58j8elj',
+                database='emm8upo3c4p4gcgr'
+            )
+            cursor = conn.cursor()
+            query = "SELECT * FROM users WHERE email=%s"
+            cursor.execute(query, (email,))
+            existing_user = cursor.fetchone()
+            cursor.close()
+            conn.close()
+            
+            if existing_user:
+                return "An account with that email address already exists", 400
+            
+            # Create a new user account
+            conn = mysql.connector.connect(
+                host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+                user='zmisv7zova93dpr5',
+                password='soduf1rla58j8elj',
+                database='emm8upo3c4p4gcgr'
+            )
+            cursor = conn.cursor()
+            query = "INSERT INTO users (f_name, l_name, email, user_password) VALUES (%s, %s, %s, %s)"
+            values = (first_name, last_name, email, password)
+            cursor.execute(query, values)
+            conn.commit()
+            
+            
+            # Redirect the user to the login page
+            return redirect(url_for('login'))
+        
+        except:
+            return "The request could not be completed", 500
+        
+        finally:
+            cursor.close()
+            conn.close()
+        
+    # If GET, return the signup page
+    return render_template('signup/index.html')
+
+
 
 
 # -------------------- STATIC --------------------
