@@ -48,6 +48,7 @@ function populateForm() {
     document.getElementById("email-input").value = user.email;
     document.getElementById("password-input").value = user.user_password;
     document.getElementById("phone-input").value = user.phone;
+    formatPhoneNumber(document.getElementById("phone-input"));
 }
 
 /**
