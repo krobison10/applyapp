@@ -1,3 +1,5 @@
+showLoader();
+
 const viewPage = document.querySelector(".view-mode");
 const editPage = document.querySelector(".edit-mode");
 
@@ -10,6 +12,7 @@ async function fetchUser() {
 
         convertNulls(user);
         populateInfo();
+        hideLoader();
 
     } catch (error) {
         console.error("Failed to fetch applications");
@@ -93,3 +96,22 @@ function formatPhoneNumberFull(phoneNumberString) {
     return null;
 }
 fetchUser();
+
+
+
+// #region Loading Wheel
+
+function showLoader() {
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+    const loader = document.createElement("div");
+    loader.classList.add("loader");
+    overlay.appendChild(loader);
+    document.body.appendChild(overlay);
+}
+
+function hideLoader() {
+    const overlay = document.querySelector(".overlay");
+    overlay.parentNode.removeChild(overlay);
+}
+// #endregion

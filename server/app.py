@@ -335,8 +335,6 @@ def update_interview():
         cursor.close()
         conn.close()
 
-    
-
 
 @app.route('/api/delete_interview', methods=['POST'])
 def delete_interview():
@@ -509,6 +507,12 @@ def login():
     return render_template('login/index.html')
 
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop('user_id', None)
+    return redirect('/')
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -574,6 +578,8 @@ def signup():
 
 @app.route('/account')
 def account():
+    if not session.get('user_id'):
+        return redirect('/')
     user_id = session.get('user_id')
     
     return render_template('account/index.html', user_id=user_id)
@@ -581,6 +587,8 @@ def account():
 
 @app.route('/dashboard')
 def dashboard():
+    if not session.get('user_id'):
+        return redirect('/')
     user_id = session.get('user_id')
     
     return render_template('dashboard/index.html', user_id=user_id)
