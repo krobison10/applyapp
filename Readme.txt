@@ -15,3 +15,8 @@ associated with the application. Users can sort the database based on date submi
 the company name, or by the application status. Some of the fields are subfields of
 other fields, such as company details being a subset of company name
 and job description being a subset of position name.
+
+
+PROJECT STRUCTURE
+
+The project has two main directories, server and client. The backend lives in server and uses the python flask framework, the main script is named app.py which contains all the endpoints and sql. Helpers.py contains a few more functions. The client directory houses the pages, stylesheets, and javascript. These can all be found in the pages directory with subdirectories for each page. All the files outside of client and server are for the heroku deployment.
