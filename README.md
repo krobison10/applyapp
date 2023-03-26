@@ -1,28 +1,38 @@
 # 📝 App.ly: Job Application and Interview Tracker 
 One-stop shop to track job applications and interviews.
 
+<br>
+
 ## 🔗 Demo link:
 Try [App.ly](https://applyapp.herokuapp.com/) now!
 
-## Table of Contents:
+<br>
 
-- [About The App](#about-the-app)
-- [Screenshots](#screenshots)
-- [Technologies](#technologies)
-- [Setup](#setup)
-- [Approach](#approach)
-- [Status](#status)
+## 📃 Table of Contents:
+
+- [About The App](#-about-the-app)
+- [Screenshots](#-screenshots)
+- [Technologies](#-technologies)
+- [Setup](#%EF%B8%8F-setup)
+- [Approach](#-approach)
+- [Status](#-status)
 - [Credits](#credits)
 
-## About The App
+<br>
+
+## 📕 About The App
 
 App.ly is an application that allows users to track their job applications and interviews, all in one place, with a clean and minimal user interface, and without the extra bloatware included with other existing trackers. It was developed by Kyler Robison as part of a group database design project for TCSS 445 Database Systems Design, instructed by Dr. Eyhab Al-Masri at the University of Washington Tacoma. As a group, choosing to build a job application tracker was a no-brainer, as it was something that we would all use and certainly something that we'd probably all need. Keeping track of dozens of applications is no easy task, App.ly attempts to add simplicity to the process.
+
+<br>
 
 ## 📸 Screenshots
 
 `![Writing](https://unsplash.com/photos/VBPzRgd7gfc)`
 
 Picture by [Kelly Sikkema](https://unsplash.com/@kellysikkema)
+
+<br>
 
 ## 💻 Technologies
 
@@ -32,7 +42,6 @@ Frontend:
 
 `JavaScript` `HTML5` `CSS3`
 
-<br>
 
 Backend:
 
@@ -40,17 +49,15 @@ Backend:
 
 `Python` `Flask` `MySQL`
 
-<br>
-
 Hosted with:
 
 <img src="https://github.com/devicons/devicon/blob/master/icons/heroku/heroku-original.svg" alt="Heroku Logo" width="50" height="50"/>
 
 `Heroku`
 
-<br>
-
 It is what I like to call, the JMPF (JS-MySQL-Python-Flask) stack, pronounced gympf.
+
+<br>
 
 ## 🛠️ Setup
 1. download or clone the repository
@@ -58,6 +65,8 @@ It is what I like to call, the JMPF (JS-MySQL-Python-Flask) stack, pronounced gy
    - Flask==2.2.3
    - mysql-connector-python==8.0.32
 1. test flask local server with `flask run`
+
+<br>
 
 ## 🤓 Approach
 
@@ -83,6 +92,7 @@ The choices here were relatively simple. I like python, I like its ability to ge
 
 The choice to use MySQL was also quite simple, the market was full of DBMS choices, but it would have been foolish to not choose the most widely used one that is open-source to boot.
 
+<br>
 
 ## 📈 Status
 App.ly is still in progress. After a brief hiatus, devlopment will continue.
@@ -97,6 +107,8 @@ Current backlog:
   - Warning/confirm dialogues for delete actions
   - Implement delete account function for General Data Protection Regulation (GDPR) compliance
   - Implement a way to associate the specific resume and/or cover letter used for application
+
+<br>
 
 ## Credits
 List of contriubutors:
