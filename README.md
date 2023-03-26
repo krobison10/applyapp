@@ -1,7 +1,7 @@
-# App.ly: Job Application and Interview Tracker
+# 📝 App.ly: Job Application and Interview Tracker 
 One-stop shop to track job applications and interviews.
 
-## Demo link:
+## 🔗 Demo link:
 Try [App.ly](https://applyapp.herokuapp.com/) now!
 
 ## Table of Contents:
@@ -18,13 +18,13 @@ Try [App.ly](https://applyapp.herokuapp.com/) now!
 
 App.ly is an application that allows users to track their job applications and interviews, all in one place, with a clean and minimal user interface, and without the extra bloatware included with other existing trackers. It was developed by Kyler Robison as part of a group database design project for TCSS 445 Database Systems Design, instructed by Dr. Eyhab Al-Masri at the University of Washington Tacoma. As a group, choosing to build a job application tracker was a no-brainer, as it was something that we would all use and certainly something that we'd probably all need. Keeping track of dozens of applications is no easy task, App.ly attempts to add simplicity to the process.
 
-## Screenshots
+## 📸 Screenshots
 
 `![Writing](https://unsplash.com/photos/VBPzRgd7gfc)`
 
 Picture by [Kelly Sikkema](https://unsplash.com/@kellysikkema)
 
-## Technologies
+## 💻 Technologies
 
 Frontend:
 
@@ -52,14 +52,14 @@ Hosted with:
 
 It is what I like to call, the JMPF (JS-MySQL-Python-Flask) stack, pronounced gympf.
 
-## Setup
+## 🛠️ Setup
 1. download or clone the repository
 1. install the following Python packages in your environment:
    - Flask==2.2.3
    - mysql-connector-python==8.0.32
 1. test flask local server with `flask run`
 
-## Approach
+## 🤓 Approach
 
 ### Project Structure
 
@@ -84,7 +84,7 @@ The choices here were relatively simple. I like python, I like its ability to ge
 The choice to use MySQL was also quite simple, the market was full of DBMS choices, but it would have been foolish to not choose the most widely used one that is open-source to boot.
 
 
-## Status
+## 📈 Status
 App.ly is still in progress. After a brief hiatus, devlopment will continue.
 
 Current backlog:
