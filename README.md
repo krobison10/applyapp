@@ -6,6 +6,8 @@ One-stop shop to track job applications and interviews.
 ## 🔗 Demo link:
 Try [App.ly](https://applyapp.herokuapp.com/) now!
 
+Feel free to sign up with fake info (the email wont need verifying).
+
 <br>
 
 ## 📃 Table of Contents:
