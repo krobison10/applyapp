@@ -593,6 +593,9 @@ async function submitPOST(url, data) {
     fetchInterviews();
 }  
 
+/**
+ * Closes both the app view and interview edit windows.
+ */
 function resetAll() {
     closeAppWindow();
     closeIntEdit();

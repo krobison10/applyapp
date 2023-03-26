@@ -30,9 +30,18 @@ App.ly is an application that allows users to track their job applications and i
 
 ## 📸 Screenshots
 
-`![Writing](https://unsplash.com/photos/VBPzRgd7gfc)`
+---
 
-Picture by [Kelly Sikkema](https://unsplash.com/@kellysikkema)
+<img src="demo_screenshots/dashboard.png" alt="apply dashboard" width="450"/>
+<img src="demo_screenshots/app_view.png" alt="apply app view" width="300"/>
+
+---
+
+<img src="demo_screenshots/account.png" alt="apply account" width="450"/>
+<img src="demo_screenshots/int_edit.png" alt="apply int edit" width="280"/>
+
+---
+
 
 <br>
 
