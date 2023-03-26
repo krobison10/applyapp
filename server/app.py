@@ -4,10 +4,9 @@ import mysql.connector
 import helpers
 
 app = Flask(__name__, static_folder='../client', template_folder='../client/pages')
+
 app.secret_key = '!U!Lc?U+E5imA@asozly'
-
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://zmisv7zova93dpr5:soduf1rla58j8elj@tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/emm8upo3c4p4gcgr'
+db_password = 'soduf1rla58j8elj'
 
 
 # -------------------- API --------------------
@@ -89,12 +88,7 @@ def get_interviews():
 def update_application():
     data = request.get_json()
 
-    conn = mysql.connector.connect(
-        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-        user='zmisv7zova93dpr5',
-        password='soduf1rla58j8elj',
-        database='emm8upo3c4p4gcgr'
-    )
+    conn = new_db_connection()
     cursor = conn.cursor()
 
     try:
@@ -178,12 +172,7 @@ def update_application():
 def create_application():
     data = request.get_json()
 
-    conn = mysql.connector.connect(
-        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-        user='zmisv7zova93dpr5',
-        password='soduf1rla58j8elj',
-        database='emm8upo3c4p4gcgr'
-    )
+    conn = new_db_connection()
     cursor = conn.cursor()
 
     try:
@@ -241,12 +230,7 @@ def create_application():
 def delete_application():
     id = request.get_json()["application_id"]
     
-    conn = mysql.connector.connect(
-        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-        user='zmisv7zova93dpr5',
-        password='soduf1rla58j8elj',
-        database='emm8upo3c4p4gcgr'
-    )
+    conn = new_db_connection()
     cursor = conn.cursor()
     
     try:
@@ -274,12 +258,7 @@ def create_interview():
         else:
             data[key] = f"'{data[key]}'"
     
-    conn = mysql.connector.connect(
-        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-        user='zmisv7zova93dpr5',
-        password='soduf1rla58j8elj',
-        database='emm8upo3c4p4gcgr'
-    )
+    conn = new_db_connection()
     cursor = conn.cursor()
     
     try:
@@ -310,12 +289,7 @@ def update_interview():
         else:
             data[key] = f"'{data[key]}'"
 
-    conn = mysql.connector.connect(
-        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-        user='zmisv7zova93dpr5',
-        password='soduf1rla58j8elj',
-        database='emm8upo3c4p4gcgr'
-    )
+    conn = new_db_connection()
     cursor = conn.cursor()
 
     try:
@@ -344,12 +318,7 @@ def update_interview():
 def delete_interview():
     id = request.get_json()["id"]
 
-    conn = mysql.connector.connect(
-        host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-        user='zmisv7zova93dpr5',
-        password='soduf1rla58j8elj',
-        database='emm8upo3c4p4gcgr'
-    )
+    conn = new_db_connection()
     cursor = conn.cursor()
 
     try:
@@ -406,12 +375,7 @@ def update_user():
         
         
         # get existing email
-        conn = mysql.connector.connect(
-            host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-            user='zmisv7zova93dpr5',
-            password='soduf1rla58j8elj',
-            database='emm8upo3c4p4gcgr'
-        )
+        conn = new_db_connection()
 
         cursor = conn.cursor()
 
@@ -428,12 +392,7 @@ def update_user():
         
         if email != existing_email:
             # Check if the email already exists
-            conn = mysql.connector.connect(
-                host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-                user='zmisv7zova93dpr5',
-                password='soduf1rla58j8elj',
-                database='emm8upo3c4p4gcgr'
-            )
+            conn = new_db_connection()
             cursor = conn.cursor()
             query = "SELECT * FROM users WHERE email=%s"
             cursor.execute(query, (email,))
@@ -446,12 +405,7 @@ def update_user():
                 return redirect('/account')
         
         # Update user account
-        conn = mysql.connector.connect(
-            host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-            user='zmisv7zova93dpr5',
-            password='soduf1rla58j8elj',
-            database='emm8upo3c4p4gcgr'
-        )
+        conn = new_db_connection()
         cursor = conn.cursor()
         
         query = "UPDATE users SET f_name = %s, l_name = %s, email = %s, user_password = %s, phone = %s WHERE user_id = %s"
@@ -486,12 +440,7 @@ def login():
         password = request.form['password']
         
         if helpers.is_valid_credentials(email, password):
-            conn = mysql.connector.connect(
-                host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-                user='zmisv7zova93dpr5',
-                password='soduf1rla58j8elj',
-                database='emm8upo3c4p4gcgr'
-            )
+            conn = new_db_connection()
             cursor = conn.cursor()
             cursor.execute("SELECT user_id FROM users WHERE email = %s", (email,))
             user_id = cursor.fetchone()[0]
@@ -532,12 +481,7 @@ def signup():
                 return "Please fill out all required fields", 400
             
             # Check if the user already exists
-            conn = mysql.connector.connect(
-                host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-                user='zmisv7zova93dpr5',
-                password='soduf1rla58j8elj',
-                database='emm8upo3c4p4gcgr'
-            )
+            conn = new_db_connection()
             cursor = conn.cursor()
             query = "SELECT * FROM users WHERE email=%s"
             cursor.execute(query, (email,))
@@ -549,12 +493,7 @@ def signup():
                 return "An account with that email address already exists", 400
             
             # Create a new user account
-            conn = mysql.connector.connect(
-                host='tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-                user='zmisv7zova93dpr5',
-                password='soduf1rla58j8elj',
-                database='emm8upo3c4p4gcgr'
-            )
+            conn = new_db_connection()
             cursor = conn.cursor()
             query = "INSERT INTO users (f_name, l_name, email, user_password) VALUES (%s, %s, %s, %s)"
             values = (first_name, last_name, email, password)
@@ -574,7 +513,6 @@ def signup():
         
     # If GET, return the signup page
     return render_template('signup/index.html')
-
 
 
 # -------------------- STATIC --------------------
@@ -601,3 +539,14 @@ def dashboard():
 @app.route('/')
 def index():
     return redirect('/login')
+
+
+# -------------------- HELPERS --------------------
+
+def new_db_connection():
+    return mysql.connector.connect(
+        host = 'tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        user = 'zmisv7zova93dpr5',
+        password = db_password,
+        database = 'emm8upo3c4p4gcgr'
+    )
