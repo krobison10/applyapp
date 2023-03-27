@@ -4,6 +4,9 @@
 # Ignore virtual environment directory
 venv/
 
+# Ignore the local .env that contains sensitive data
+.env
+
 # Node modules
 node_modules/
 

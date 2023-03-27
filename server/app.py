@@ -1,12 +1,17 @@
 from flask import Flask, render_template, request, redirect, session, jsonify, url_for, flash
+from dotenv import load_dotenv
+
 import mysql.connector
+import os
 
 import helpers
 
+load_dotenv()
+
 app = Flask(__name__, static_folder='../client', template_folder='../client/pages')
 
-app.secret_key = '!U!Lc?U+E5imA@asozly'
-db_password = 'soduf1rla58j8elj'
+app.secret_key = os.environ.get('SECRET_KEY')
+db_password = os.environ.get('DB_PASSWORD')
 
 
 # -------------------- API --------------------
