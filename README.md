@@ -1,4 +1,4 @@
-# 📝 App.ly: Job Application and Interview Tracker 
+# App.ly: Job Application and Interview Tracker 
 One-stop shop to track job applications and interviews.
 
 <br>
