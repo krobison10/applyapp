@@ -1,10 +1,8 @@
+import os
+import pymysql
+
 from flask import Flask, render_template, request, redirect, session, jsonify, url_for, flash
 from dotenv import load_dotenv
-
-import mysql.connector
-import os
-
-import helpers
 
 load_dotenv()
 
@@ -27,7 +25,7 @@ def get_applications():
     WHERE user_id = {user_id};
     """
     
-    results = helpers.execute_query(query)
+    results = execute_query(query)
     
     # Convert the results to a list of dictionaries for JSON serialization
     applications = []
@@ -68,7 +66,7 @@ def get_interviews():
     WHERE users.user_id = {user_id};
     """
     
-    results = helpers.execute_query(query)
+    results = execute_query(query)
     
     # Convert the results to a list of dictionaries for JSON serialization
     applications = []
@@ -164,7 +162,7 @@ def update_application():
 
         return get_applications()
 
-    except mysql.connector.Error as error:
+    except pymysql.Error as error:
         print(f"Error: {error}")
         return "An error occurred while processing your request", 500
     
@@ -222,7 +220,7 @@ def create_application():
 
         return get_applications()
 
-    except mysql.connector.Error as error:
+    except pymysql.Error as error:
         print(f"Error: {error}")
         return "An error occurred while processing your request", 500
     
@@ -244,7 +242,7 @@ def delete_application():
         conn.commit()
         return get_applications()
         
-    except mysql.connector.Error as error:
+    except pymysql.Error as error:
         print(f"Error: {error}")
         return "An error occurred while processing your request", 500
     
@@ -275,7 +273,7 @@ def create_interview():
         conn.commit()
         return get_interviews()
         
-    except mysql.connector.Error as error:
+    except pymysql.Error as error:
         print(f"Error: {error}")
         return "An error occurred while processing your request", 500
     
@@ -310,7 +308,7 @@ def update_interview():
         conn.commit()
         return get_interviews()
 
-    except mysql.connector.Error as error:
+    except pymysql.Error as error:
         print(f"Error: {error}")
         return "An error occurred while processing your request", 500
 
@@ -332,7 +330,7 @@ def delete_interview():
         conn.commit()
         return get_interviews()
 
-    except mysql.connector.Error as error:
+    except pymysql.Error as error:
         print(f"Error: {error}")
         return "An error occurred while processing your request", 500
 
@@ -347,7 +345,7 @@ def user_info():
     
     query = f"SELECT * FROM users WHERE user_id = {user_id}"
     
-    results = helpers.execute_query(query)
+    results = execute_query(query)
     
     user = {
         'id': results[0][0], 
@@ -444,7 +442,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
         
-        if helpers.is_valid_credentials(email, password):
+        if is_valid_credentials(email, password):
             conn = new_db_connection()
             cursor = conn.cursor()
             cursor.execute("SELECT user_id FROM users WHERE email = %s", (email,))
@@ -548,9 +546,40 @@ def index():
 
 # -------------------- HELPERS --------------------
 
+
+def is_valid_credentials(email, password):
+    conn = new_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if user is None:
+        return False
+
+    stored_password = user[1]
+    return stored_password == password
+
+
+# may want to deprecate
+def execute_query(query):
+    conn = new_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(query)
+    results = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+
+    return results
+
+
+
 def new_db_connection():
-    return mysql.connector.connect(
+    return pymysql.connect(
         host = 'tvcpw8tpu4jvgnnq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+        port = 3306,
         user = 'zmisv7zova93dpr5',
         password = db_password,
         database = 'emm8upo3c4p4gcgr'
